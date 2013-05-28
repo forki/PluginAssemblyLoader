@@ -1,3 +1,28 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginAssemblyLoader", "src\app\PluginAssemblyLoader\PluginAssemblyLoader.csproj", "{85A6DAFA-E889-41C7-A256-B58C2DA6CC12}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{FFD8CA97-46A8-4D96-BEC4-4E82D8B240DC}"
+	ProjectSection(SolutionItems) = preProject
+		00_boot.bat = 00_boot.bat
+		01_boot_and_build.bat = 01_boot_and_build.bat
+		02_build.bat = 02_build.bat
+		build.fsx = build.fsx
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{85A6DAFA-E889-41C7-A256-B58C2DA6CC12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{85A6DAFA-E889-41C7-A256-B58C2DA6CC12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{85A6DAFA-E889-41C7-A256-B58C2DA6CC12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{85A6DAFA-E889-41C7-A256-B58C2DA6CC12}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
