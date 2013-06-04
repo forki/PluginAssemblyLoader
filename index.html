@@ -51,6 +51,30 @@
 
 <pre><code>PluginAssemblyLoader -f &lt;path_to_assembly&gt; -c "CRM ConnectionString"
 </code></pre>
+
+<p>If you would like to update a plugin assembly on an On-Premise instance with  integrated authentication</p>
+
+<pre><code>PluginAssemblyLoader -f "C:\MyPlugin.dll" -c "Url=http://crmserver/org;"
+</code></pre>
+
+<p>For CRM Online (North America) it would be</p>
+
+<pre><code>PluginAssemblyLoader -f "C:\MyPlugin.dll" - c "Url=https://contoso.crm.dynamics.com; Username=usr@contoso.onmicrosoft.com; Password=password;"
+</code></pre>
+
+<h3>
+<a name="how-to-build" class="anchor" href="#how-to-build"><span class="octicon octicon-link"></span></a>How to build</h3>
+
+<p>If you want to restore the project after you cloned it please run:</p>
+
+<pre><code>00_boot.bat
+</code></pre>
+
+<p>This will restore all necessary packages for building the project.
+After that you could run a new build with:</p>
+
+<pre><code>02_build.bat
+</code></pre>
       </section>
     </div>
     <footer>
