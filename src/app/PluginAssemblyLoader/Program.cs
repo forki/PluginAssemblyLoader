@@ -81,9 +81,7 @@ namespace PluginAssemblyLoader
             var assembly = Assembly.ReflectionOnlyLoadFrom(filePath); // TODO catch NotFound
             _logger.Log(LogLevel.Info, () => "Loaded assembly.");
 
-            var conString = new ConnectionStringSettings("crm", connectionString);
-
-            var con = new CrmConnection(conString);
+            var con = CrmConnection.Parse(connectionString);
             var service = new OrganizationService(con);
 
             var pluginAssemblyId = FindPluginAssembly(service, assembly.GetName().Name);
