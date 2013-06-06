@@ -69,6 +69,14 @@ namespace PluginAssemblyLoader
                 ShowHelp(p);
                 Environment.Exit(1);
             }
+            else
+            {
+                if (!File.Exists(filePath))
+                {
+                    _logger.Log(LogLevel.Error, () => string.Format("Could not find the specified file at {0}", filePath));
+                    Environment.Exit(100);
+                }
+            }
 
             if (string.IsNullOrWhiteSpace(connectionString))
             {
@@ -92,7 +100,7 @@ namespace PluginAssemblyLoader
             }
             else
             {
-                _logger.Log(LogLevel.Error, () => "Sorry, I am unable to find the appropriate assembly.");
+                _logger.Log(LogLevel.Error, () => "Sorry, I am unable to find the appropriate assembly in the specified CRM organization. Is it already registered?");
                 Environment.Exit(3);
             }
         }
