@@ -40,7 +40,7 @@ Target "Clean" (fun _ ->
 Target "BuildVersions" (fun _ ->
 
     asmVersion      <- version + "." + build
-    asmInfoVersion  <- version + " - " + gitbranch + " - " + sha
+    asmInfoVersion  <- asmVersion + " - " + gitbranch + " - " + sha
 
     let nugetBuildNumber = if not isLocalBuild then build else "0"
 
