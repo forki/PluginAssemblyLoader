@@ -6,26 +6,26 @@ open Fake
 open Fake.AssemblyInfoFile
 
 //Project config
-let project = "PluginAssemblyLoader"
-let projectName = "Dynamics CRM 2011 Plugin Assembly Loader"
-let projectSummary = "Updates Pluginassemblies in Dynamics CRM"
-let projectDescription = "Updates Pluginassemblies in Dynamics CRM"
-let authors = ["Christoph Keller"]
-let homepage = "http://msdyncrm-contrib.github.io/PluginAssemblyLoader"
+let project                 = "PluginAssemblyLoader"
+let projectName             = "Dynamics CRM 2011 Plugin Assembly Loader"
+let projectSummary          = "Updates Pluginassemblies in Dynamics CRM"
+let projectDescription      = "Updates Pluginassemblies in Dynamics CRM"
+let authors                 = ["Christoph Keller"]
+let homepage                = "http://msdyncrm-contrib.github.io/PluginAssemblyLoader"
 
 // Directories
-let buildDir    = @".\build"
-let testDir     = @".\test"
-let deployDir   = @".\Publish"
-let nugetDir    = @".\nuget" 
-let packagesDir = @".\packages"
+let buildDir                = @".\build"
+let testDir                 = @".\test"
+let deployDir               = @".\Publish"
+let nugetDir                = @".\nuget" 
+let packagesDir             = @".\packages"
 
 // version info
-let mutable version = "1.0." + buildVersion 
-let mutable nugetVersion = version
+let mutable version         = "1.0." + buildVersion 
+let mutable nugetVersion    = version
 
-let gitbranch = Git.Information.getBranchName "."
-let sha = Git.Information.getCurrentHash() 
+let gitbranch               = Git.Information.getBranchName "."
+let sha                     = Git.Information.getCurrentHash() 
 
 // Targets
 Target "Clean" (fun _ -> 
@@ -35,6 +35,10 @@ Target "Clean" (fun _ ->
 )
 
 Target "BuildVersions" (fun _ ->
+
+    match System.String.Equals(gitbranch, "develop", System.StringComparison.CurrentCultureIgnoreCase) with
+        | true -> (nugetVersion <- version + "-" + "beta")
+        | false -> ()
 
     SetBuildNumber version
 )
