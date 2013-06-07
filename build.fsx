@@ -6,7 +6,7 @@ open Fake
 open Fake.AssemblyInfoFile
 
 //Project config
-let project                 = "PluginAssemblyLoader"
+let project                 = "msdyncrm.PluginAssemblyLoader"
 let projectName             = "Dynamics CRM 2011 Plugin Assembly Loader"
 let projectSummary          = "Updates Pluginassemblies in Dynamics CRM"
 let projectDescription      = "Updates Pluginassemblies in Dynamics CRM"
