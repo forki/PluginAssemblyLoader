@@ -19,7 +19,7 @@ let nugetDir = @".\nuget\"
 let packagesDir = @".\packages\"
 
 // version info
-let mutable version = "1.5." + buildVersion 
+let mutable version = "1.0." + buildVersion 
 let mutable nugetVersion = version
 
 let gitbranch = Git.Information.getBranchName "."
