@@ -9,6 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{FFD8CA97
 		01_boot_and_build.bat = 01_boot_and_build.bat
 		02_build.bat = 02_build.bat
 		build.fsx = build.fsx
+		PluginAssemblyLoader.nuspec = PluginAssemblyLoader.nuspec
 	EndProjectSection
 EndProject
 Global
