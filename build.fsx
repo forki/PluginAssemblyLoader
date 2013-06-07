@@ -6,17 +6,19 @@ open Fake
 open Fake.AssemblyInfoFile
 
 //Project config
+let project = "PluginAssemblyLoader"
 let projectName = "Dynamics CRM 2011 Plugin Assembly Loader"
 let projectSummary = "Updates Pluginassemblies in Dynamics CRM"
-let projectDescription = ""
+let projectDescription = "Updates Pluginassemblies in Dynamics CRM"
 let authors = ["Christoph Keller"]
+let homepage = "http://msdyncrm-contrib.github.io/PluginAssemblyLoader"
 
 // Directories
-let buildDir  = @".\build\"
-let testDir   = @".\test\"
-let deployDir = @".\Publish\"
-let nugetDir = @".\nuget\" 
-let packagesDir = @".\packages\"
+let buildDir    = @".\build"
+let testDir     = @".\test"
+let deployDir   = @".\Publish"
+let nugetDir    = @".\nuget" 
+let packagesDir = @".\packages"
 
 // version info
 let mutable version = "1.0." + buildVersion 
@@ -71,19 +73,45 @@ Target "NUnitTest" (fun _ ->
                 OutputFile = testDir + @"TestResults.xml"})
 )
 
-//Target "Publish" (fun _ ->     
-//   
-//   
-//)
+Target "CreateNuGet" (fun _ -> 
+   
+    let nugetToolsDir = nugetDir @@ "tools"
+
+    CreateDir nugetToolsDir
+
+    !+ (buildDir @@ @"*.exe") 
+      ++ (buildDir @@ @"*.dll")   
+        |> Scan
+        |> CopyTo nugetToolsDir
+
+    NuGet (fun p -> 
+        {p with
+            Authors = authors
+            Project = project
+            Description = projectDescription
+            //Version = nugetVersion                           
+            OutputPath = nugetDir
+            AccessKey = getBuildParamOrDefault "nugetkey" ""
+            Publish = hasBuildParam "nugetkey" }) "PluginAssemblyLoader.nuspec"
+)
+
+Target "BuildZip" (fun _ ->     
+
+    let deployZip = deployDir @@ sprintf "%s-%s.zip" project buildVersion
+
+    !+ (buildDir @@ @"*.exe") 
+      ++ (buildDir @@ @"*.dll")   
+       |> Scan
+       |> Zip buildDir deployZip
+)
 
 // Dependencies
 "Clean"
   ==> "BuildVersions"
   =?> ("AssemblyInfo", not isLocalBuild ) 
   ==> "BuildApp"
-  //==> "BuildTest"
-  //==> "NUnitTest"
- // ==> "Publish"
+  ==> "CreateNuGet"
+  ==> "BuildZip"
  
 // start build
 RunTargetOrDefault "BuildApp"
