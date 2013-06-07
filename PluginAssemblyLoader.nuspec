@@ -1,16 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
-        <id>PluginAssemblyLoader</id>
-        <version>1.0.0</version>
-        <authors>Christoph Keller</authors>
-        <requireLicenseAcceptance>false</requireLicenseAcceptance>
-        <description>A tool for updating plugin assemblies in a CI build</description>
+		<description>@description@</description>
+		<id>@project@</id>
+		<version>@build.number@</version>
+		<authors>@authors@</authors>
+		<language>en-US</language>
+		<summary>@summary@</summary>
     </metadata>
-    <files>
-        <file src="build\microsoft.xrm.client.dll" target="tools\microsoft.xrm.client.dll" />
-        <file src="build\microsoft.xrm.sdk.dll" target="tools\microsoft.xrm.sdk.dll" />
-        <file src="build\NLog.dll" target="tools\NLog.dll" />
-        <file src="build\PluginAssemblyLoader.exe" target="tools\PluginAssemblyLoader.exe" />
-    </files>
 </package>
