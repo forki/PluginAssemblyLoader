@@ -46,11 +46,11 @@ Target "BuildVersions" (fun _ ->
 
     nugetVersion    <- version + "." + nugetBuildNumber
 
-    match System.String.Equals(gitbranch, "develop", System.StringComparison.CurrentCultureIgnoreCase) with
-        | true -> (nugetVersion <- nugetVersion + "-" + "beta")
-        | false -> ()
+    match System.String.Equals(gitbranch, "master", System.StringComparison.CurrentCultureIgnoreCase) with
+        | true -> ()
+        | false -> (nugetVersion <- nugetVersion + "-" + "beta")
     
-    SetBuildNumber asmVersion   // Publish version to TeamCity
+    SetBuildNumber nugetVersion   // Publish version to TeamCity
 )
 
 Target "AssemblyInfo" (fun _ ->
