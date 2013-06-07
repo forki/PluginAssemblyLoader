@@ -21,8 +21,11 @@ let nugetDir                = @".\nuget"
 let packagesDir             = @".\packages"
 
 // version info
-let mutable version         = "1.0." + buildVersion 
-let mutable nugetVersion    = version
+let mutable version         = "1.0"
+let mutable build           = buildVersion 
+let mutable nugetVersion    = ""
+let mutable asmVersion      = ""
+let mutable asmInfoVersion  = ""
 
 let gitbranch               = Git.Information.getBranchName "."
 let sha                     = Git.Information.getCurrentHash() 
@@ -36,19 +39,26 @@ Target "Clean" (fun _ ->
 
 Target "BuildVersions" (fun _ ->
 
-    match System.String.Equals(gitbranch, "develop", System.StringComparison.CurrentCultureIgnoreCase) with
-        | true -> (nugetVersion <- version + "-" + "beta")
-        | false -> ()
+    asmVersion      <- version + "." + build
+    asmInfoVersion  <- version + " - " + gitbranch + " - " + sha
 
-    SetBuildNumber version
+    let nugetBuildNumber = if not isLocalBuild then build else "0"
+
+    nugetVersion    <- version + "." + nugetBuildNumber
+
+    match System.String.Equals(gitbranch, "develop", System.StringComparison.CurrentCultureIgnoreCase) with
+        | true -> (nugetVersion <- nugetVersion + "-" + "beta")
+        | false -> ()
+    
+    SetBuildNumber asmVersion   // Publish version to TeamCity
 )
 
 Target "AssemblyInfo" (fun _ ->
 
     ReplaceAssemblyInfoVersions (fun p ->
         {p with
-            AssemblyVersion = version
-            AssemblyInformationalVersion = version + " - " + gitbranch + " - " + sha
+            AssemblyVersion = asmVersion
+            AssemblyInformationalVersion = asmInfoVersion
             OutputFileName = @".\src\app\PluginAssemblyLoader\Properties\AssemblyInfo.cs"
             })    
 )
@@ -93,7 +103,7 @@ Target "CreateNuGet" (fun _ ->
             Authors = authors
             Project = project
             Description = projectDescription
-            //Version = nugetVersion                           
+            Version = nugetVersion                           
             OutputPath = nugetDir
             AccessKey = getBuildParamOrDefault "nugetkey" ""
             Publish = hasBuildParam "nugetkey" }) "PluginAssemblyLoader.nuspec"
@@ -101,7 +111,7 @@ Target "CreateNuGet" (fun _ ->
 
 Target "BuildZip" (fun _ ->     
 
-    let deployZip = deployDir @@ sprintf "%s-%s.zip" project buildVersion
+    let deployZip = deployDir @@ sprintf "%s-%s.zip" project asmVersion
 
     !+ (buildDir @@ @"*.exe") 
       ++ (buildDir @@ @"*.dll")   
