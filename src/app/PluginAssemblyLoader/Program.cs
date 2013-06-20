@@ -151,7 +151,7 @@ namespace PluginAssemblyLoader
             var query = new QueryExpression
             {
                 EntityName = "pluginassembly",
-                ColumnSet = null,
+                ColumnSet = null,   // null -> only the primary key field is returned
                 Criteria = new FilterExpression()
             };
             query.Criteria.AddCondition("name", ConditionOperator.Equal, assemblyName);
