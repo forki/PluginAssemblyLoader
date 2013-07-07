@@ -12,16 +12,38 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{FFD8CA97
 		PluginAssemblyLoader.nuspec = PluginAssemblyLoader.nuspec
 	EndProjectSection
 EndProject
+Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Installer", "Installer\Installer.wixproj", "{45186734-4227-49E4-9B4C-BF92F49E7EF0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Debug|Mixed Platforms = Debug|Mixed Platforms
+		Debug|x86 = Debug|x86
 		Release|Any CPU = Release|Any CPU
+		Release|Mixed Platforms = Release|Mixed Platforms
+		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{85A6DAFA-E889-41C7-A256-B58C2DA6CC12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{85A6DAFA-E889-41C7-A256-B58C2DA6CC12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{85A6DAFA-E889-41C7-A256-B58C2DA6CC12}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{85A6DAFA-E889-41C7-A256-B58C2DA6CC12}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{85A6DAFA-E889-41C7-A256-B58C2DA6CC12}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{85A6DAFA-E889-41C7-A256-B58C2DA6CC12}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{85A6DAFA-E889-41C7-A256-B58C2DA6CC12}.Release|Any CPU.Build.0 = Release|Any CPU
+		{85A6DAFA-E889-41C7-A256-B58C2DA6CC12}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{85A6DAFA-E889-41C7-A256-B58C2DA6CC12}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{85A6DAFA-E889-41C7-A256-B58C2DA6CC12}.Release|x86.ActiveCfg = Release|Any CPU
+		{45186734-4227-49E4-9B4C-BF92F49E7EF0}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{45186734-4227-49E4-9B4C-BF92F49E7EF0}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{45186734-4227-49E4-9B4C-BF92F49E7EF0}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{45186734-4227-49E4-9B4C-BF92F49E7EF0}.Debug|x86.ActiveCfg = Debug|x86
+		{45186734-4227-49E4-9B4C-BF92F49E7EF0}.Debug|x86.Build.0 = Debug|x86
+		{45186734-4227-49E4-9B4C-BF92F49E7EF0}.Release|Any CPU.ActiveCfg = Release|x86
+		{45186734-4227-49E4-9B4C-BF92F49E7EF0}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{45186734-4227-49E4-9B4C-BF92F49E7EF0}.Release|Mixed Platforms.Build.0 = Release|x86
+		{45186734-4227-49E4-9B4C-BF92F49E7EF0}.Release|x86.ActiveCfg = Release|x86
+		{45186734-4227-49E4-9B4C-BF92F49E7EF0}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

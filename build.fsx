@@ -19,6 +19,9 @@ let testDir                 = @".\test"
 let deployDir               = @".\Publish"
 let nugetDir                = @".\nuget" 
 let packagesDir             = @".\packages"
+let installerDir            = @".\msi"
+
+let productName             = @"PluginAssemblyLoader"
 
 // version info
 let mutable version         = "1.0"
@@ -119,6 +122,16 @@ Target "BuildZip" (fun _ ->
        |> Zip buildDir deployZip
 )
 
+Target "Installer" (fun _ ->
+    let wixDirectory = @"C:\Program Files (x86)\WiX Toolset v3.7\bin"
+    WiX (fun p ->
+        {p with
+            ToolDirectory = wixDirectory
+            })
+        (installerDir + @"\" + productName + ".msi")
+        ".\Installer\Product.wxs"
+)
+
 // Dependencies
 "Clean"
   ==> "BuildVersions"
@@ -126,6 +139,7 @@ Target "BuildZip" (fun _ ->
   ==> "BuildApp"
   ==> "CreateNuGet"
   ==> "BuildZip"
+  ==> "Installer"
  
 // start build
 RunTargetOrDefault "BuildApp"
