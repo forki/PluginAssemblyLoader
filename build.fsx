@@ -123,12 +123,12 @@ Target "BuildZip" (fun _ ->
 )
 
 Target "Installer" (fun _ ->
-    let wixDirectory = @"C:\Program Files (x86)\WiX Toolset v3.7\bin"
+    let wixDirectory = @".\tools\wix37";
     WiX (fun p ->
         {p with
             ToolDirectory = wixDirectory
             })
-        (installerDir + @"\" + productName + ".msi")
+        (deployDir + @"\" + productName + ".msi")
         ".\Installer\Product.wxs"
 )
 
