@@ -64,8 +64,7 @@ Target "AssemblyInfo" (fun _ ->
 )
 
 Target "BuildApp" (fun _ ->
-    !+ @"src\app\**\*.csproj"      
-        |> Scan
+    !! @"src\app\**\*.csproj"      
         |> MSBuildRelease buildDir "Build"
         |> Log "Build-Output: "
 )
@@ -93,9 +92,8 @@ Target "CreateNuGet" (fun _ ->
 
     CreateDir nugetToolsDir
 
-    !+ (buildDir @@ @"*.exe") 
+    !! (buildDir @@ @"*.exe") 
       ++ (buildDir @@ @"*.dll")   
-        |> Scan
         |> CopyTo nugetToolsDir
 
     NuGet (fun p -> 
@@ -113,9 +111,8 @@ Target "BuildZip" (fun _ ->
 
     let deployZip = deployDir @@ sprintf "%s-%s.zip" project asmVersion
 
-    !+ (buildDir @@ @"*.exe") 
+    !! (buildDir @@ @"*.exe") 
       ++ (buildDir @@ @"*.dll")   
-       |> Scan
        |> Zip buildDir deployZip
 )
 
