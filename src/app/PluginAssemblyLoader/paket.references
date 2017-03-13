@@ -1,0 +1,4 @@
+NLog
+Microsoft.CrmSdk.CoreAssemblies
+Microsoft.CrmSdk.XrmTooling.CoreAssembly
+Microsoft.IdentityModel.Clients.ActiveDirectory

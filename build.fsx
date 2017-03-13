@@ -7,9 +7,9 @@ open Fake.AssemblyInfoFile
 
 //Project config
 let project                 = "msdyncrm.PluginAssemblyLoader"
-let projectName             = "Dynamics CRM 2011 Plugin Assembly Loader"
-let projectSummary          = "Updates Pluginassemblies in Dynamics CRM"
-let projectDescription      = "Updates Pluginassemblies in Dynamics CRM"
+let projectName             = "Dynamics CRM Plugin Assembly Loader"
+let projectSummary          = "Updates Plugin Assemblies in Dynamics CRM"
+let projectDescription      = "Updates Plugin Assemblies in Dynamics CRM"
 let authors                 = ["Christoph Keller"]
 let homepage                = "http://msdyncrm-contrib.github.io/PluginAssemblyLoader"
 
@@ -24,7 +24,7 @@ let installerDir            = @".\msi"
 let productName             = @"PluginAssemblyLoader"
 
 // version info
-let mutable version         = "1.0"
+let mutable version         = "2.0"
 let mutable build           = buildVersion 
 let mutable nugetVersion    = ""
 let mutable asmVersion      = ""
@@ -67,28 +67,11 @@ Target "AssemblyInfo" (fun _ ->
 )
 
 Target "BuildApp" (fun _ ->
-    !+ @"src\app\**\*.csproj"      
-        |> Scan
+    !! @"src\app\**\*.csproj"      
         |> MSBuildRelease buildDir "Build"
         |> Log "Build-Output: "
 )
 
-Target "BuildTest" (fun _ ->
-    !! @"src\test\**\*.csproj"
-      |> MSBuildDebug testDir "Build"
-      |> Log "TestBuild-Output: "
-)
-
-Target "NUnitTest" (fun _ ->  
-
-    !! (testDir + @"*.Tests.dll")
-        |> NUnit (fun p -> 
-            {p with 
-                ToolPath = @".\tools\NUnit.Runners\tools\"; 
-                Framework = "net-4.0";
-                DisableShadowCopy = true; 
-                OutputFile = testDir + @"TestResults.xml"})
-)
 
 Target "CreateNuGet" (fun _ -> 
    
@@ -96,9 +79,8 @@ Target "CreateNuGet" (fun _ ->
 
     CreateDir nugetToolsDir
 
-    !+ (buildDir @@ @"*.exe") 
+    !! (buildDir @@ @"*.exe") 
       ++ (buildDir @@ @"*.dll")   
-        |> Scan
         |> CopyTo nugetToolsDir
 
     NuGet (fun p -> 
@@ -116,20 +98,9 @@ Target "BuildZip" (fun _ ->
 
     let deployZip = deployDir @@ sprintf "%s-%s.zip" project asmVersion
 
-    !+ (buildDir @@ @"*.exe") 
+    !! (buildDir @@ @"*.exe") 
       ++ (buildDir @@ @"*.dll")   
-       |> Scan
        |> Zip buildDir deployZip
-)
-
-Target "Installer" (fun _ ->
-    let wixDirectory = @".\tools\wix37";
-    WiX (fun p ->
-        {p with
-            ToolDirectory = wixDirectory
-            })
-        (deployDir + @"\" + productName + ".msi")
-        ".\Installer\Product.wxs"
 )
 
 // Dependencies
@@ -139,7 +110,6 @@ Target "Installer" (fun _ ->
   ==> "BuildApp"
   ==> "CreateNuGet"
   ==> "BuildZip"
-  ==> "Installer"
  
 // start build
 RunTargetOrDefault "BuildApp"

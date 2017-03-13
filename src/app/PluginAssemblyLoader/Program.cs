@@ -1,15 +1,17 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
-using Microsoft.Xrm.Client;
-using Microsoft.Xrm.Client.Services;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Messages;
 using Microsoft.Xrm.Sdk.Query;
+using Microsoft.Xrm.Tooling.Connector;
+
 using Mono.Options;
 using NLog;
 using NLog.Config;
 using NLog.Targets;
+
+using SDK;
 
 namespace PluginAssemblyLoader
 {
@@ -72,7 +74,7 @@ namespace PluginAssemblyLoader
             {
                 if (!File.Exists(filePath))
                 {
-                    _logger.Log(LogLevel.Error, () => string.Format("Could not find the specified file at {0}", filePath));
+                    _logger.Log(LogLevel.Error, () => $"Could not find the specified file at {filePath}");
                     Environment.Exit(100);
                 }
             }
@@ -88,8 +90,8 @@ namespace PluginAssemblyLoader
             var assembly = Assembly.ReflectionOnlyLoadFrom(filePath); // TODO catch NotFound
             _logger.Log(LogLevel.Info, () => "Loaded assembly.");
 
-            var con = CrmConnection.Parse(connectionString);
-            var service = new OrganizationService(con);
+            var client = new CrmServiceClient(connectionString);            
+            var service = client.OrganizationServiceProxy;
 
             var pluginAssemblyId = FindPluginAssembly(service, assembly.GetName().Name);
 
@@ -133,24 +135,23 @@ namespace PluginAssemblyLoader
 
             _logger.Log(LogLevel.Trace, () => "Created assembly content");
 
-            var pluginAssembly = new Entity
+            var pluginAssembly = new PluginAssembly
             {
-                LogicalName = "pluginassembly",
-                Id = pluginAssemblyId
+                LogicalName = PluginAssembly.EntityLogicalName,
+                Id = pluginAssemblyId,
+                Content = assemblyContent
             };
-
-            pluginAssembly.SetAttributeValue<string>("content", assemblyContent);
 
             service.Update(pluginAssembly);
 
             _logger.Log(LogLevel.Info, () => "Update was successful");
         }
 
-        private static Guid FindPluginAssembly(OrganizationService service, string assemblyName)
+        private static Guid FindPluginAssembly(IOrganizationService service, string assemblyName)
         {
             var query = new QueryExpression
             {
-                EntityName = "pluginassembly",
+                EntityName = PluginAssembly.EntityLogicalName,
                 ColumnSet = null,   // null -> only the primary key field is returned
                 Criteria = new FilterExpression()
             };
@@ -166,7 +167,7 @@ namespace PluginAssemblyLoader
             if (response.EntityCollection.Entities.Count == 1)
             {
                 var id = response.EntityCollection[0].GetAttributeValue<Guid>("pluginassemblyid");
-                _logger.Log(LogLevel.Debug, () => string.Format("Found id {0} for assembly", id));
+                _logger.Log(LogLevel.Debug, () => $"Found id {id} for assembly");
 
                 return id;
             }

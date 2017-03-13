@@ -1,0 +1,20 @@
+FRAMEWORK: >= NET45
+NUGET
+  remote: https://www.nuget.org/api/v2
+    FAKE (4.55)
+    Microsoft.CrmSdk.CoreAssemblies (8.2.0.2)
+      Microsoft.IdentityModel (>= 6.1.7600.16394)
+    Microsoft.CrmSdk.Deployment (8.2.0.2)
+      Microsoft.CrmSdk.CoreAssemblies (>= 8.2)
+    Microsoft.CrmSdk.Workflow (8.2.0.2)
+      Microsoft.CrmSdk.CoreAssemblies (>= 8.2)
+    Microsoft.CrmSdk.XrmTooling.CoreAssembly (8.2.0.2)
+      Microsoft.CrmSdk.CoreAssemblies (>= 8.2)
+      Microsoft.CrmSdk.Deployment (>= 8.2)
+      Microsoft.CrmSdk.Workflow (>= 8.2)
+      Microsoft.IdentityModel.Clients.ActiveDirectory (>= 2.22.302111727)
+    Microsoft.IdentityModel (6.1.7600.16394)
+    Microsoft.IdentityModel.Clients.ActiveDirectory (2.22.302111727)
+    NuGet.CommandLine (3.5)
+  remote: https://www.nuget.org/api/v2/curated-feeds/microsoftdotnet
+    NLog (2.0.1.2)

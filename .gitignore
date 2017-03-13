@@ -36,3 +36,5 @@ nuget/*
 Publish/*
 tools/*
 *.wixobj
+.fake/*
+.vs/*

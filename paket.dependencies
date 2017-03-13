@@ -1,0 +1,12 @@
+framework: >= net45
+cache ./nupkgs versions: current
+
+source https://www.nuget.org/api/v2/curated-feeds/microsoftdotnet/
+source https://www.nuget.org/api/v2/
+
+nuget NuGet.CommandLine
+nuget NLog 2.0.1.2 framework: >= net45
+nuget Microsoft.CrmSdk.CoreAssemblies
+nuget Microsoft.CrmSdk.XrmTooling.CoreAssembly
+nuget Microsoft.IdentityModel.Clients.ActiveDirectory ~> 2.22.302111727 
+nuget FAKE
